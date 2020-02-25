@@ -25,9 +25,9 @@ router.post('/login', (req,res) => {
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
-                res.status(200).json({message: 'Welcome'})
+                res.status(200).json({message: 'Welkommen'})
             } else {
-                res.status(401).json({message: 'Invalid Credentials'})
+                res.status(401).json({message: 'keiner kann dir sagen welche turen die richtigen sind'})
             }
         })
         .catch(error => {
@@ -35,4 +35,17 @@ router.post('/login', (req,res) => {
         })
 });
 
+router.get('/logout', (req,res) => {
+    if (req.session) {
+        req.session.destroy(err => {
+            if (err) {
+                res.status(500).json({ you: 'du bist im labyrinth'})
+            } else {
+                res.status(200).json({you: 'lauf, kind, lauf, so schnell do kanst'})
+            }
+        });
+    } else {
+        res.status(200).json({ bye: 'du kommst hier nicht mehr raus'})
+    }
+});
 module.exports = router;
